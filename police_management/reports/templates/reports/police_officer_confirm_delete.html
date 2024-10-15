@@ -1,0 +1,11 @@
+{% extends 'reports/base.html' %}
+{% block title %}Delete Police Officer{% endblock %}
+{% block content %}
+<h1>Delete Police Officer</h1>
+<p>Are you sure you want to delete "{{ object }}"?</p>
+<form method="post">
+    {% csrf_token %}
+    <button class="btn btn-danger" type="submit">Yes, delete</button>
+    <a class="btn btn-secondary" href="{% url 'police_officer_list' %}">Cancel</a>
+</form>
+{% endblock %}

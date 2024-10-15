@@ -1,0 +1,28 @@
+{% extends 'reports/base.html' %}
+{% block title %}Police Officers{% endblock %}
+{% block content %}
+<h1>Police Officers</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Badge Number</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for officer in officers %}
+        <tr>
+            <td>{{ officer.user.username }}</td>
+            <td>{{ officer.badge_number }}</td>
+            <td>
+                <a class="btn btn-info" href="{% url 'police_officer_detail' officer.pk %}">View</a>
+                <a class="btn btn-warning" href="{% url 'police_officer_update' officer.pk %}">Edit</a>
+                <a class="btn btn-danger" href="{% url 'police_officer_delete' officer.pk %}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a class="btn btn-primary" href="{% url 'police_officer_create' %}">Add Police Officer</a>
+{% endblock %}

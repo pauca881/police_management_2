@@ -1,0 +1,15 @@
+{% extends 'reports/base.html' %}
+
+{% block title %}Criminal Details{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Criminal Details</h2>
+    <ul>
+        <li><strong>Name:</strong> {{ criminal.name }}</li>
+        <li><strong>Alias:</strong> {{ criminal.alias }}</li>
+        <li><strong>Captured By:</strong> {{ criminal.capture_by.user.username }}</li>
+    </ul>
+    <a class="btn btn-primary" href="{% url 'criminal_list' %}">Back to Criminals List</a>
+</div>
+{% endblock %}

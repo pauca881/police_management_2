@@ -1,0 +1,63 @@
+{% extends 'reports/base.html' %}
+
+{% block title %}Criminals List{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Criminals</h2>
+
+    <!-- Formulario de búsqueda -->
+    <form method="GET" class="form-inline mb-4">
+        {{ search_form.query.label_tag }}
+        <input type="text" name="query" class="form-control mr-2" placeholder="Search by name or alias..." value="{{ request.GET.query }}">
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+
+    <!-- Lista de criminales filtrados -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Alias</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for criminal in criminals %}
+            <tr>
+                <td>{{ criminal.name }}</td>
+                <td>{{ criminal.alias }}</td>
+                <td>
+                    <a class="btn btn-info" href="{% url 'criminal_detail' criminal.pk %}">View</a>
+                    <a class="btn btn-warning" href="{% url 'criminal_update' criminal.pk %}">Edit</a>
+                    <a class="btn btn-danger" href="{% url 'criminal_delete' criminal.pk %}">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3">No criminals found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Paginación (si es necesario) -->
+    {% if is_paginated %}
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}&query={{ request.GET.query }}">Previous</a></li>
+                {% endif %}
+                {% for num in page_obj.paginator.page_range %}
+                    <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                        <a class="page-link" href="?page={{ num }}&query={{ request.GET.query }}">{{ num }}</a>
+                    </li>
+                {% endfor %}
+                {% if page_obj.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}&query={{ request.GET.query }}">Next</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% endif %}
+</div>
+{% endblock %}

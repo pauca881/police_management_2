@@ -1,0 +1,26 @@
+{% extends 'reports/base.html' %}
+
+{% block title %}Crime Details{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Crime Details</h2>
+    <ul>
+        <li><strong>Title:</strong> {{ crime.title }}</li>
+        <li><strong>Description:</strong> {{ crime.description }}</li>
+        <li><strong>Date:</strong> {{ crime.date|date:"d M Y" }}</li>
+        <li><strong>Location:</strong> {{ crime.location }}</li>
+        <li><strong>Assigned Officer:</strong> {{ crime.police_officer.user.username }}</li>
+        <li><strong>Criminals Involved:</strong>
+            <ul>
+                {% for criminal in crime.criminals.all %}
+                    <li>{{ criminal.name }} ({{ criminal.alias }})</li>
+                {% empty %}
+                    <li>No criminals involved.</li>
+                {% endfor %}
+            </ul>
+        </li>
+    </ul>
+    <a class="btn btn-primary" href="{% url 'crime_list' %}">Back to Crimes List</a>
+</div>
+{% endblock %}
